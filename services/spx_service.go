@@ -131,16 +131,25 @@ func CheckFee(ctx context.Context, payload models.CheckFeeReq) (*models.CheckFee
 
 	b, _, err := doPOST(ctx, "/open/api/v1/order/batch_check_order", payload)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("SPX request error: %w", err)
 	}
 
-	// Parse ke struct custom, bukan generic BaseResp[T]
+	// Cek apakah respons JSON valid
+	if len(b) == 0 {
+		return nil, fmt.Errorf("SPX response empty")
+	}
+	if b[0] != '{' && b[0] != '[' {
+		// Bukan JSON → balikin raw respons
+		return nil, fmt.Errorf("SPX raw error: %s", string(b))
+	}
+
+	// Parse JSON valid
 	var resp models.CheckFeeResp
 	if err := json.Unmarshal(b, &resp); err != nil {
 		return nil, fmt.Errorf("SPX response parse error: %w | raw: %s", err, string(b))
 	}
 
-	// Kalau ret_code != 0, kita return error tapi tetap passing resp supaya caller bisa akses message
+	// Kalau SPX balikin error code → propagate
 	if resp.RetCode != 0 {
 		return &resp, fmt.Errorf("SPX error: %s", resp.Message)
 	}
