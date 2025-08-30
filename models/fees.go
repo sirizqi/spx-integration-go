@@ -1,6 +1,6 @@
 package models
 
-// 2.1 Check Shipping Fee
+// Check Shipping Fee
 type CheckFeeReq struct {
 	UserID     uint64        `json:"user_id"`
 	UserSecret string        `json:"user_secret"`
@@ -33,7 +33,7 @@ type CheckFeeRespData struct {
 	} `json:"fail_list"`
 }
 
-// 2.2 Get Order Fee (ASF)
+// Get Order Fee
 type GetASFReq struct {
 	UserID      uint64   `json:"user_id"`
 	UserSecret  string   `json:"user_secret"`

@@ -6,34 +6,32 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// We just ack 200 fast, then you can enqueue to worker/message bus if needed.
-
-func TrackingWebhook(c *gin.Context) { // 4.1
+func TrackingWebhook(c *gin.Context) { // Webhook Tracking
 	var body map[string]any
 	_ = c.ShouldBindJSON(&body)
 	// TODO: persist to DB / publish to queue
 	c.Status(http.StatusOK)
 }
 
-func CreateProgressWebhook(c *gin.Context) { // 4.2
+func CreateProgressWebhook(c *gin.Context) { // Webhook Create Progress
 	var body map[string]any
 	_ = c.ShouldBindJSON(&body)
 	c.Status(http.StatusOK)
 }
 
-func CreateFeedbackWebhook(c *gin.Context) { // 4.3
+func CreateFeedbackWebhook(c *gin.Context) { // Webhook Create Feedback
 	var body map[string]any
 	_ = c.ShouldBindJSON(&body)
 	c.Status(http.StatusOK)
 }
 
-func ShippingFeeWebhook(c *gin.Context) { // 4.6
+func ShippingFeeWebhook(c *gin.Context) { // Webhook Shipping Fee
 	var body map[string]any
 	_ = c.ShouldBindJSON(&body)
 	c.Status(http.StatusOK)
 }
 
-func EvidenceProofWebhook(c *gin.Context) { // 4.7
+func EvidenceProofWebhook(c *gin.Context) { // Webhook Evidence Proof
 	var body map[string]any
 	_ = c.ShouldBindJSON(&body)
 	c.Status(http.StatusOK)

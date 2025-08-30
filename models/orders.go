@@ -1,6 +1,6 @@
 package models
 
-// 1.1 Get Pickup Timeslot (req/resp)
+// Get Pickup Timeslot
 type GetPickupTimeReq struct {
 	UserID      uint64 `json:"user_id"`
 	UserSecret  string `json:"user_secret"`
@@ -9,11 +9,11 @@ type GetPickupTimeReq struct {
 type PickupSlot struct {
 	Date       string      `json:"date"`
 	PickupTime uint64      `json:"pickup_time"`
-	Slots      interface{} `json:"slots"` // bisa spesifikin kalau mau
+	Slots      interface{} `json:"slots"`
 }
 type GetPickupTimeResp = BaseResp[[]PickupSlot]
 
-// 1.2 Create Order
+// Create Order
 type CreateOrderReq struct {
 	UserID     uint64        `json:"user_id"`
 	UserSecret string        `json:"user_secret"`
@@ -98,7 +98,7 @@ type CreateFail struct {
 }
 type CreateOrderResp = BaseResp[CreateOrderRespData]
 
-// 1.3 Track Order
+// Track Order
 type TrackOrderReq struct {
 	UserID      uint64   `json:"user_id"`
 	UserSecret  string   `json:"user_secret"`
@@ -137,7 +137,7 @@ type TrackOrderRespData struct {
 }
 type TrackOrderResp = BaseResp[TrackOrderRespData]
 
-// 1.4 Cancel Order
+// Cancel Order
 type CancelOrderReq struct {
 	UserID      uint64   `json:"user_id"`
 	UserSecret  string   `json:"user_secret"`
@@ -153,7 +153,7 @@ type CancelOrderRespData struct {
 }
 type CancelOrderResp = BaseResp[CancelOrderRespData]
 
-// 1.5 Get AWB
+// Get AWB
 type GetAWBReq struct {
 	UserID      uint64   `json:"user_id"`
 	UserSecret  string   `json:"user_secret"`
@@ -169,7 +169,7 @@ type GetAWBRespData struct {
 }
 type GetAWBResp = BaseResp[GetAWBRespData]
 
-// 5.1 Address file link
+// Address file link
 type AddressLinkRespData struct {
 	AddressDownloadURL string `json:"address_download_url"`
 }

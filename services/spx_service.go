@@ -47,7 +47,6 @@ func doPOST(ctx context.Context, path string, reqBody any) ([]byte, int, error) 
 	return utils.Do(ctx, "POST", config.Cfg.BaseURL+path, body, h)
 }
 
-// 1.1
 func GetPickupTime(ctx context.Context, serviceType uint32) (*models.GetPickupTimeResp, error) {
 	req := models.GetPickupTimeReq{
 		UserID:      userIDu64(),
@@ -62,7 +61,6 @@ func GetPickupTime(ctx context.Context, serviceType uint32) (*models.GetPickupTi
 	return &resp, json.Unmarshal(b, &resp)
 }
 
-// 1.2
 func CreateOrder(ctx context.Context, payload models.CreateOrderReq) (*models.CreateOrderResp, error) {
 	if payload.UserID == 0 {
 		payload.UserID = userIDu64()
@@ -78,7 +76,6 @@ func CreateOrder(ctx context.Context, payload models.CreateOrderReq) (*models.Cr
 	return &resp, json.Unmarshal(b, &resp)
 }
 
-// 1.3
 func TrackOrder(ctx context.Context, payload models.TrackOrderReq) (*models.TrackOrderResp, error) {
 	if payload.UserID == 0 {
 		payload.UserID = userIDu64()
@@ -94,7 +91,6 @@ func TrackOrder(ctx context.Context, payload models.TrackOrderReq) (*models.Trac
 	return &resp, json.Unmarshal(b, &resp)
 }
 
-// 1.4
 func CancelOrder(ctx context.Context, trackingNos []string) (*models.CancelOrderResp, error) {
 	req := models.CancelOrderReq{
 		UserID: userIDu64(), UserSecret: config.Cfg.UserSecret, TrackingNos: trackingNos,
@@ -107,7 +103,6 @@ func CancelOrder(ctx context.Context, trackingNos []string) (*models.CancelOrder
 	return &resp, json.Unmarshal(b, &resp)
 }
 
-// 1.5
 func GetAWB(ctx context.Context, trackingNos []string) (*models.GetAWBResp, error) {
 	req := models.GetAWBReq{
 		UserID: userIDu64(), UserSecret: config.Cfg.UserSecret, TrackingNos: trackingNos,
@@ -120,7 +115,6 @@ func GetAWB(ctx context.Context, trackingNos []string) (*models.GetAWBResp, erro
 	return &resp, json.Unmarshal(b, &resp)
 }
 
-// 2.1
 func CheckFee(ctx context.Context, payload models.CheckFeeReq) (*models.CheckFeeResp, error) {
 	if payload.UserID == 0 {
 		payload.UserID = userIDu64()
@@ -133,23 +127,16 @@ func CheckFee(ctx context.Context, payload models.CheckFeeReq) (*models.CheckFee
 	if err != nil {
 		return nil, fmt.Errorf("SPX request error: %w", err)
 	}
-
-	// Cek apakah respons JSON valid
 	if len(b) == 0 {
 		return nil, fmt.Errorf("SPX response empty")
 	}
 	if b[0] != '{' && b[0] != '[' {
-		// Bukan JSON → balikin raw respons
 		return nil, fmt.Errorf("SPX raw error: %s", string(b))
 	}
-
-	// Parse JSON valid
 	var resp models.CheckFeeResp
 	if err := json.Unmarshal(b, &resp); err != nil {
 		return nil, fmt.Errorf("SPX response parse error: %w | raw: %s", err, string(b))
 	}
-
-	// Kalau SPX balikin error code → propagate
 	if resp.RetCode != 0 {
 		return &resp, fmt.Errorf("SPX error: %s", resp.Message)
 	}
@@ -157,7 +144,6 @@ func CheckFee(ctx context.Context, payload models.CheckFeeReq) (*models.CheckFee
 	return &resp, nil
 }
 
-// 2.2
 func GetASF(ctx context.Context, trackingNos []string) (*models.GetASFResp, error) {
 	req := models.GetASFReq{
 		UserID: userIDu64(), UserSecret: config.Cfg.UserSecret, TrackingNos: trackingNos,
@@ -170,9 +156,8 @@ func GetASF(ctx context.Context, trackingNos []string) (*models.GetASFResp, erro
 	return &resp, json.Unmarshal(b, &resp)
 }
 
-// 5.1
 func GetAddressLink(ctx context.Context) (*models.AddressLinkResp, error) {
-	emptyBody := map[string]any{} // only header required
+	emptyBody := map[string]any{}
 	b, _, err := doPOST(ctx, "/open/api/v1/address/get_address_download_url", emptyBody)
 	if err != nil {
 		return nil, err

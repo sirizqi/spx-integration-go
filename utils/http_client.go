@@ -22,7 +22,7 @@ var httpClient = &http.Client{
 	},
 }
 
-// Do mengeksekusi request ke Shopee Xpress dengan logging otomatis
+// Logging
 func Do(ctx context.Context, method, url string, body []byte, headers map[string]string) ([]byte, int, error) {
 	req, err := http.NewRequestWithContext(ctx, method, url, bytes.NewReader(body))
 	if err != nil {
@@ -33,7 +33,7 @@ func Do(ctx context.Context, method, url string, body []byte, headers map[string
 		req.Header.Set(k, v)
 	}
 
-	// Logging sebelum request
+	// Before Req
 	LogOutgoingRequest(method, url, headers, body)
 
 	resp, err := httpClient.Do(req)
@@ -47,7 +47,7 @@ func Do(ctx context.Context, method, url string, body []byte, headers map[string
 		return nil, resp.StatusCode, err
 	}
 
-	// Logging setelah response diterima
+	// After Resp
 	LogIncomingResponse(resp, respBody)
 
 	return respBody, resp.StatusCode, nil
