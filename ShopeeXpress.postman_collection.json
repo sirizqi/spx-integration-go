@@ -1,0 +1,160 @@
+{
+  "info": {
+    "name": "ShopeeXpress Integration",
+    "_postman_id": "9f6d433e-0e6b-4cfc-a730-0d3222edc87f",
+    "description": "ShopeeXpress API Integration Collection - All endpoints with auto-generated check-sign",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1.1 - Get Pickup Timeslot",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/pickup-time?service_type=1",
+          "host": ["{{BASE_URL}}"],
+          "path": ["pickup-time"],
+          "query": [{ "key": "service_type", "value": "1" }]
+        }
+      }
+    },
+    {
+      "name": "1.2 - Create Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/orders", "host": ["{{BASE_URL}}"], "path": ["orders"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"orders\": [\n    {\n      \"order_id\": \"ORDER12345\",\n      \"base_info\": { \"service_type\": 1 },\n      \"sender_info\": {\n        \"sender_state\": \"DKI JAKARTA\",\n        \"sender_city\": \"KOTA JAKARTA SELATAN\",\n        \"sender_district\": \"SETIA BUDI\",\n        \"sender_name\": \"Watch Store\",\n        \"sender_phone\": \"628127654321\",\n        \"sender_detail_address\": \"Jl. H. R. Rasuna Said No.22 Kav. C, Karet Kuningan\"\n      },\n      \"fulfillment_info\": {\n        \"payment_role\": 1,\n        \"cod_collection\": 0,\n        \"insurance_collection\": 0,\n        \"collect_type\": 2\n      },\n      \"deliver_info\": {\n        \"deliver_state\": \"DKI JAKARTA\",\n        \"deliver_city\": \"KOTA JAKARTA TIMUR\",\n        \"deliver_district\": \"MATRAMAN\",\n        \"deliver_name\": \"Mei\",\n        \"deliver_phone\": \"628787654321\",\n        \"deliver_detail_address\": \"Jl. Balai Rakyat, Utan Kayu Utara\"\n      },\n      \"parcel_info\": {\n        \"parcel_weight\": 1,\n        \"parcel_item_name\": \"Clothing\",\n        \"parcel_item_quantity\": 1,\n        \"parcel_length\": 1,\n        \"parcel_width\": 1,\n        \"parcel_height\": 1,\n        \"express_insured_value\": 90000\n      }\n    }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "1.3 - Track Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/orders/track", "host": ["{{BASE_URL}}"], "path": ["orders", "track"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tracking_no_list\": [\"SPX123456789\"]\n}"
+        }
+      }
+    },
+    {
+      "name": "1.4 - Cancel Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/orders/cancel", "host": ["{{BASE_URL}}"], "path": ["orders", "cancel"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tracking_no_list\": [\"SPX123456789\"]\n}"
+        }
+      }
+    },
+    {
+      "name": "1.5 - Get AWB",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/orders/awb", "host": ["{{BASE_URL}}"], "path": ["orders", "awb"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tracking_no_list\": [\"SPX123456789\"]\n}"
+        }
+      }
+    },
+    {
+      "name": "2.1 - Check Shipping Fee",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/fees/check", "host": ["{{BASE_URL}}"], "path": ["fees", "check"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"orders\": [\n    {\n      \"base_info\": { \"service_type\": 1 },\n      \"sender_info\": {\n        \"sender_state\": \"DKI JAKARTA\",\n        \"sender_city\": \"KOTA JAKARTA SELATAN\",\n        \"sender_district\": \"SETIA BUDI\",\n        \"sender_name\": \"Watch Store\",\n        \"sender_phone\": \"628127654321\",\n        \"sender_detail_address\": \"Jl. H. R. Rasuna Said No.22 Kav. C, Karet Kuningan\"\n      },\n      \"deliver_info\": {\n        \"deliver_state\": \"DKI JAKARTA\",\n        \"deliver_city\": \"KOTA JAKARTA TIMUR\",\n        \"deliver_district\": \"MATRAMAN\",\n        \"deliver_name\": \"Mei\",\n        \"deliver_phone\": \"628787654321\",\n        \"deliver_detail_address\": \"Jl. Balai Rakyat, Utan Kayu Utara\"\n      },\n      \"parcel_info\": {\n        \"parcel_weight\": 1,\n        \"parcel_item_name\": \"Clothing\",\n        \"parcel_item_quantity\": 1,\n        \"parcel_length\": 1,\n        \"parcel_width\": 1,\n        \"parcel_height\": 1,\n        \"express_insured_value\": 90000\n      },\n      \"fulfillment_info\": {\n        \"payment_role\": 1,\n        \"cod_collection\": 0,\n        \"insurance_collection\": 0,\n        \"collect_type\": 2\n      }\n    }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "2.2 - Get ASF",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/fees/asf", "host": ["{{BASE_URL}}"], "path": ["fees", "asf"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tracking_no_list\": [\"SPX123456789\"]\n}"
+        }
+      }
+    },
+    {
+      "name": "5.1 - Get Address Download URL",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{BASE_URL}}/address/download-url", "host": ["{{BASE_URL}}"], "path": ["address", "download-url"] }
+      }
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          "const CryptoJS = require('crypto-js');",
+          "",
+          "// generate timestamp & random-num",
+          "const timestamp = Math.floor(Date.now() / 1000);",
+          "const randomNum = Math.floor(Math.random() * 1e12);",
+          "pm.environment.set('TIMESTAMP', timestamp);",
+          "pm.environment.set('RANDOM_NUM', randomNum);",
+          "",
+          "// ambil app_id & secret",
+          "const appId = pm.environment.get('APP_ID');",
+          "const appSecret = pm.environment.get('APP_SECRET');",
+          "",
+          "// ambil body payload (kalau ada)",
+          "let payload = '';",
+          "if (pm.request.body && pm.request.body.mode === 'raw') {",
+          "    payload = pm.request.body.raw || '';",
+          "}",
+          "if (!payload || payload === '{}') {",
+          "    payload = '{}';",
+          "}",
+          "",
+          "// generate check-sign pakai HMAC SHA256",
+          "const checkSignStr = `${appId}_${timestamp}_${randomNum}_${payload}`;",
+          "const checkSign = CryptoJS.HmacSHA256(checkSignStr, appSecret).toString(CryptoJS.enc.Hex);",
+          "pm.environment.set('CHECK_SIGN', checkSign);",
+          "",
+          "// set headers otomatis",
+          "pm.request.headers.add({ key: 'app-id', value: appId });",
+          "pm.request.headers.add({ key: 'timestamp', value: timestamp.toString() });",
+          "pm.request.headers.add({ key: 'random-num', value: randomNum.toString() });",
+          "pm.request.headers.add({ key: 'check-sign', value: checkSign });"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ]
+}
